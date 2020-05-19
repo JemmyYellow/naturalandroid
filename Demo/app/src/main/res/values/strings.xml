@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="btn_login">登录</string>
+    <string name="app_ver">1.0.1Beta</string>
+    <string name="btn_signup">注册</string>
+    <string name="image_description">吉大logo</string>
+    <string name="hint_user">用户名</string>
+    <string name="hint_pwd">密码</string>
+    <string name="thumb_up">赞</string>
+    <string name="thumb_down">踩</string>
+    <string name="TestView">testview</string>
+    <string name="tv_user">用户名：</string>
+    <string name="tv_passwd">密码：</string>
+    <string name="welcome">MainActivity</string>
+    <string name="home">Home</string>
+    <string name="home_page">首页</string>
+    <string name="cart">购物车</string>
+    <string name="order">订单</string>
+    <string name="user">我的</string>
+    <string name="signout">注销登录</string>
+    <string name="userimage">UserImage</string>
+    <string name="password">**********</string>
+    <string name="refresh">刷新</string>
+    <string name="alert_update">点击头像或用户名更改信息</string>
+    <string name="goback">返回</string>
+</resources>

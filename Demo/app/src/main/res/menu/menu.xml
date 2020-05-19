@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@mipmap/home_unselected"
+        android:title="@string/home_page" />
+    <item
+        android:id="@+id/cart"
+        android:icon="@mipmap/cart_unselected"
+        android:title="@string/cart" />
+    <item
+        android:id="@+id/order"
+        android:icon="@mipmap/order_unselected"
+        android:title="@string/order" />
+    <item
+        android:id="@+id/user"
+        android:icon="@mipmap/user_unselected"
+        android:title="@string/user"
+        app:showAsAction="withText" />
+</menu>

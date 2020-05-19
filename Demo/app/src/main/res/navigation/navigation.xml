@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.jemmy.HomeFragment"
+        android:label="首页"
+        tools:layout="@layout/home_fragment" />
+    <fragment
+        android:id="@+id/cart"
+        android:name="com.jemmy.CartFragment"
+        android:label="购物车"
+        tools:layout="@layout/cart_fragment" />
+    <fragment
+        android:id="@+id/order"
+        android:name="com.jemmy.OrderFragment"
+        android:label="订单"
+        tools:layout="@layout/order_fragment" />
+    <fragment
+        android:id="@+id/user"
+        android:name="com.jemmy.UserFragment"
+        android:label="用户"
+        tools:layout="@layout/user_fragment" />
+</navigation>
