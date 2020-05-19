@@ -4,6 +4,8 @@ import okhttp3.*;
 
 public class OkHttpUtils {
 
+    private OkHttpUtils(){}
+
     private static final OkHttpClient CLIENT = new OkHttpClient();
     /**
      * get请求

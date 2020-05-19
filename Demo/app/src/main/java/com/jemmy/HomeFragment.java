@@ -40,7 +40,14 @@ public class HomeFragment extends Fragment {
         mViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
         // TODO: Use the ViewModel
 
-        testImage.setImageResource(R.drawable.jlu);
+        String path = "D:\\Mysql\\mysql-8.0.20-winx64\\images\\score.jpg";
+        File file = new File("path");
+//        testImage.setImageResource(R.drawable.jlu);
+        boolean ee = file.exists();
+        if(ee){
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            testImage.setImageBitmap(bitmap);
+        }
 
     }
 
