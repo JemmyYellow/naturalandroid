@@ -23,4 +23,7 @@
     <string name="refresh">刷新</string>
     <string name="alert_update">点击头像或用户名更改信息</string>
     <string name="goback">返回</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

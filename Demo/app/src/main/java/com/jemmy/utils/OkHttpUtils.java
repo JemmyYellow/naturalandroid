@@ -1,18 +1,23 @@
 package com.jemmy.utils;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.*;
 
 public class OkHttpUtils {
 
     private OkHttpUtils(){}
 
-    private static final OkHttpClient CLIENT = new OkHttpClient();
+    private static final OkHttpClient CLIENT = new OkHttpClient.Builder()
+            .connectTimeout(10,TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.MILLISECONDS)
+            .build();
     /**
      * get请求
      */
     public static void get(String url, OkHttpCallback callback){
         callback.url = url;
-
         Request request = new Request.Builder().url(url).build();
         CLIENT.newCall(request).enqueue(callback);
     }
