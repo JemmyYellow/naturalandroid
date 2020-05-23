@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jemmy.common.Const;
 import com.jemmy.utils.OkHttpCallback;
 import com.jemmy.utils.OkHttpUtils;
 import com.jemmy.utils.SharedPreferencesUtil;
@@ -64,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String password = editText2.getText().toString();
                 progressBar.setVisibility(View.VISIBLE);
                 //请求接口 okhttp
-                OkHttpUtils.get("http://192.168.3.11:8080/portal/user/login.do?username=" + username
+                OkHttpUtils.get(Const.LOCAL+"/portal/user/login.do?username=" + username
                                 + "&password=" + password,
                         new OkHttpCallback() {
                             @Override

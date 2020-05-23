@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.jemmy.common.Const;
 import com.jemmy.utils.OkHttpCallback;
 import com.jemmy.utils.OkHttpUtils;
 import com.jemmy.utils.SharedPreferencesUtil;
@@ -78,7 +79,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                         SharedPreferencesUtil util2 = SharedPreferencesUtil.getInstance(requireActivity());
                         util2.delete("isLogin");
                         util2.delete("user");
-                        OkHttpUtils.get("http://192.168.3.11:8080/portal/user/signOut.do?username="+mViewModel.getUserVO().getUsername(),
+                        OkHttpUtils.get(Const.LOCAL+"/portal/user/signOut.do?username="+mViewModel.getUserVO().getUsername(),
                                 new OkHttpCallback());
                         requireActivity().finish();
                     }
