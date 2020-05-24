@@ -42,6 +42,22 @@ public class HomeFragment extends Fragment {
         View view =  inflater.inflate(R.layout.home_fragment, container, false);
         layout = view.findViewById(R.id.swipeLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
+        layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mViewModel.fetchData();
+            }
+        });
+        final HomeAdapter adapter = new HomeAdapter(new DiffCallback());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        mViewModel._photoListLive.observe(getViewLifecycleOwner(), new Observer<List<PhotoItem>>() {
+            @Override
+            public void onChanged(List<PhotoItem> photoItems) {
+                adapter.submitList(photoItems);
+                layout.setRefreshing(false);
+            }
+        });
         return view;
     }
 
@@ -70,25 +86,7 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
 
-        // TODO: Use the ViewModel
-        layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mViewModel.fetchData();
-            }
-        });
-        final HomeAdapter adapter = new HomeAdapter(new DiffCallback());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        mViewModel._photoListLive.observe(getViewLifecycleOwner(), new Observer<List<PhotoItem>>() {
-            @Override
-            public void onChanged(List<PhotoItem> photoItems) {
-                adapter.submitList(photoItems);
-                layout.setRefreshing(false);
-            }
-        });
         mViewModel.fetchData();
-
     }
 
 }

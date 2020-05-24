@@ -38,7 +38,7 @@ public class SignInActivity extends AppCompatActivity {
                 final String password = et_password.getText().toString();
                 final String phone = et_phone.getText().toString();
 
-                OkHttpUtils.get(Const.LOCAL+"/portal/user/register.do?username="
+                OkHttpUtils.get(Const.IP_PORT+"/portal/user/register.do?username="
                 +username+"&password="+password+"&phone="+phone,
                         new OkHttpCallback(){
                             @Override

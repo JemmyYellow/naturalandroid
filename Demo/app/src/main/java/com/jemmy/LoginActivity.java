@@ -1,11 +1,11 @@
 package com.jemmy;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,16 +23,15 @@ import com.jemmy.utils.OkHttpUtils;
 import com.jemmy.utils.SharedPreferencesUtil;
 import com.jemmy.vo.ServerResponse;
 import com.jemmy.vo.User;
-import com.jemmy.vo.UserVO;
 
 import java.lang.ref.WeakReference;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText editText, editText2;
-    Button button, button2;
-    ProgressBar progressBar;
-    ImageView imageView;
+    private EditText editText, editText2;
+    private Button button, button2;
+    private ProgressBar progressBar;
+    private ImageView imageView;
     MyHandler handler;
 
 
@@ -65,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String password = editText2.getText().toString();
                 progressBar.setVisibility(View.VISIBLE);
                 //请求接口 okhttp
-                OkHttpUtils.get(Const.LOCAL+"/portal/user/login.do?username=" + username
+                OkHttpUtils.get(Const.IP_PORT + "/portal/user/login.do?username=" + username
                                 + "&password=" + password,
                         new OkHttpCallback() {
                             @Override
@@ -114,14 +113,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    static class MyHandler extends Handler{
+    static class MyHandler extends Handler {
         private final WeakReference<LoginActivity> reference;
-        public MyHandler(LoginActivity activity){
+
+        public MyHandler(LoginActivity activity) {
             this.reference = new WeakReference<LoginActivity>(activity);
         }
+
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 0:
 //                    progressBar.setVisibility(View.INVISIBLE);
                     reference.get().progressBar.setVisibility(View.INVISIBLE);
@@ -129,6 +130,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             super.handleMessage(msg);
         }
-    };
+    }
+
+    ;
 
 }

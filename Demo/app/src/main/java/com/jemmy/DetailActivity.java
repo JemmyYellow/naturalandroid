@@ -20,13 +20,14 @@ public class DetailActivity extends AppCompatActivity {
 
     private ShimmerLayout shimmerLayoutDetail;
     private PhotoView photoView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
         photoView = findViewById(R.id.photoView);
-        shimmerLayoutDetail =findViewById(R.id.shimmerLayoutDetail);
+        shimmerLayoutDetail = findViewById(R.id.shimmerLayoutDetail);
         shimmerLayoutDetail.setShimmerAngle(0);
         shimmerLayoutDetail.setShimmerColor(0x55FFFFFF);
         shimmerLayoutDetail.startShimmerAnimation();
@@ -41,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        if(shimmerLayoutDetail != null){
+                        if (shimmerLayoutDetail != null) {
                             shimmerLayoutDetail.stopShimmerAnimation();
                         }
                         return false;

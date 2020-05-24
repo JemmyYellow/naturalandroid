@@ -61,10 +61,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         userVO.setRole(loginuser.getRole());
         mViewModel.setUser(loginuser);
         mViewModel.setUserVO(userVO);
-//        Log.e("USER", loginuser.getUsername()+" "
-//                +loginuser.getPassword()+" "
-//                +loginuser.getPhone()+" "
-//                +loginuser.getId()+" "+loginuser.getRole());
 
         User user = (User) util.readObject("user", User.class);
         textView.setText(user.getUsername());
@@ -79,7 +75,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                         SharedPreferencesUtil util2 = SharedPreferencesUtil.getInstance(requireActivity());
                         util2.delete("isLogin");
                         util2.delete("user");
-                        OkHttpUtils.get(Const.LOCAL+"/portal/user/signOut.do?username="+mViewModel.getUserVO().getUsername(),
+                        util2.clear();
+                        OkHttpUtils.get(Const.IP_PORT+"/portal/user/signOut.do?username="+mViewModel.getUserVO().getUsername(),
                                 new OkHttpCallback());
                         requireActivity().finish();
                     }
