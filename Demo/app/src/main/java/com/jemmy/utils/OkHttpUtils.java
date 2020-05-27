@@ -9,9 +9,9 @@ public class OkHttpUtils {
     private OkHttpUtils(){}
 
     private static final OkHttpClient CLIENT = new OkHttpClient.Builder()
-            .connectTimeout(10,TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.MILLISECONDS)
+            .connectTimeout(6,TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
             .build();
     /**
      * get请求

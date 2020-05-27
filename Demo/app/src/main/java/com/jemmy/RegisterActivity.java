@@ -2,7 +2,6 @@ package com.jemmy;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
@@ -18,7 +17,7 @@ import com.jemmy.utils.OkHttpUtils;
 import com.jemmy.vo.ServerResponse;
 import com.jemmy.vo.User;
 
-public class SignInActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_username,et_password,et_phone;
     private Button btn_commit;
@@ -53,11 +52,11 @@ public class SignInActivity extends AppCompatActivity {
                                     //注册成功
                                     sign = 0;
                                     Looper.prepare();
-                                    Toast.makeText(SignInActivity.this, "注册成功", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_LONG).show();
                                     Looper.loop();
                                 }else {
                                     Looper.prepare();
-                                    Toast.makeText(SignInActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(RegisterActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
                                     Looper.loop();
                                 }
                             }

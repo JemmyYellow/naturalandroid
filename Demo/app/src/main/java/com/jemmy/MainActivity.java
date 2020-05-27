@@ -2,7 +2,10 @@ package com.jemmy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -21,6 +24,21 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity{
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case Const.START_HOME:
+                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                    break;
+                case Const.START_LOGIN:
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(i);
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +54,6 @@ public class MainActivity extends AppCompatActivity{
 
         SharedPreferencesUtil sharedPreferences = SharedPreferencesUtil.getInstance(getApplicationContext());
         boolean isLogin = sharedPreferences.readBoolean("isLogin");
-//        Log.e("eeeeeeeee", islogin+"");
         if (isLogin) {
             User user = (User) sharedPreferences.readObject("user", User.class);
             String username = user.getUsername();
@@ -58,8 +75,15 @@ public class MainActivity extends AppCompatActivity{
                                 util.clear();
                                 util.putBoolean("isLogin", true);
                                 util.putString("user", gson.toJson(serverResponse.getData()));
-                                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+//                                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                                handler.sendEmptyMessage(Const.START_HOME);
                             }
+                        }
+
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            super.onFailure(call, e);
+                            handler.sendEmptyMessage(Const.START_LOGIN);
                         }
                     });
         } else {

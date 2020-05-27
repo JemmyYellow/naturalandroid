@@ -10,5 +10,9 @@ public class Const {
 
     public static final int REFRESH_PHONE = 10003;
 
+    public static final int START_HOME = 10004;
+
+    public static final int START_LOGIN = 10005;
+
     public static final String PIXABAYURL="https://pixabay.com/api/?key=16625933-7d8055440dc674a42d5d7602e&q=suv";
 }
