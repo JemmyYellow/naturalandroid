@@ -41,7 +41,7 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.0-alpha03'
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
     implementation 'com.android.volley:volley:1.1.1'
@@ -50,4 +50,7 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'io.supercharge:shimmerlayout:2.1.0'
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
+
+    implementation (name: 'alipaySdk-15.7.5-20200422171619', ext: 'aar')
+
 }

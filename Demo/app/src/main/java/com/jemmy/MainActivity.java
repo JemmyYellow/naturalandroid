@@ -1,5 +1,6 @@
 package com.jemmy;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity{
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
