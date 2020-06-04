@@ -8,10 +8,15 @@ public class PhotoItem implements Serializable{
 
     @SerializedName("largeImageURL")
     String largeUrl;
+
     @SerializedName("webformatURL")
     String previewUrl;
+
     @SerializedName("id")
     Integer photoid;
+
+    @SerializedName("webformatHeight")
+    Integer photoHeight;
 
     public String getLargeUrl() {
         return largeUrl;
@@ -35,5 +40,13 @@ public class PhotoItem implements Serializable{
 
     public void setPhotoid(Integer photoid) {
         this.photoid = photoid;
+    }
+
+    public Integer getPhotoHeight() {
+        return photoHeight;
+    }
+
+    public void setPhotoHeight(Integer photoHeight) {
+        this.photoHeight = photoHeight;
     }
 }

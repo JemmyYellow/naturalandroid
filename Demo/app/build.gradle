@@ -21,9 +21,9 @@ android {
         }
     }
 
-    dataBinding.enabled true
+//    dataBinding.enabled true
 
-
+    android.buildFeatures.dataBinding true
 }
 
 dependencies {
@@ -52,5 +52,7 @@ dependencies {
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
 
     implementation (name: 'alipaySdk-15.7.5-20200422171619', ext: 'aar')
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'com.google.android.material:material:1.2.0-beta01'
 
 }

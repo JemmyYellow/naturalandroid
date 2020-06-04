@@ -39,6 +39,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         View view = inflater.inflate(R.layout.user_fragment, container, false);
         btn_signout = view.findViewById(R.id.signout);
         user_image = view.findViewById(R.id.userimage);
@@ -49,7 +50,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         // TODO: Use the ViewModel
 
         //将user放在viewmodel中

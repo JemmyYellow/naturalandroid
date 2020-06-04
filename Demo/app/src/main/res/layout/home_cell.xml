@@ -1,22 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardView"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cartCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp">
 
-    <io.supercharge.shimmerlayout.ShimmerLayout
-        android:id="@+id/shimmerLayoutCell"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_rmb"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            app:srcCompat="@android:mipmap/sym_def_app_icon" />
-    </io.supercharge.shimmerlayout.ShimmerLayout>
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="36dp"
+            android:text="￥"
+            android:textColor="#E00000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shimmerLayoutCell" />
+
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="36dp"
+            android:text="汽车名字"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/shimmerLayoutCell"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/shimmerLayoutCell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_dialog"
+                android:contentDescription="@string/productImg"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:mipmap/sym_def_app_icon" />
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+        <TextView
+            android:id="@+id/productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            android:textColor="#EE0000"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_rmb"
+            app:layout_constraintStart_toEndOf="@+id/tv_rmb"
+            app:layout_constraintTop_toTopOf="@+id/tv_rmb" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>

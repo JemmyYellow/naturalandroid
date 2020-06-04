@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
 
-        SharedPreferencesUtil sharedPreferences = SharedPreferencesUtil.getInstance(getApplicationContext());
+        final SharedPreferencesUtil sharedPreferences = SharedPreferencesUtil.getInstance(getApplicationContext());
         boolean isLogin = sharedPreferences.readBoolean("isLogin");
         if (isLogin) {
             User user = (User) sharedPreferences.readObject("user", User.class);
@@ -79,19 +79,22 @@ public class MainActivity extends AppCompatActivity{
                                 util.putString("user", gson.toJson(serverResponse.getData()));
 //                                startActivity(new Intent(MainActivity.this, HomeActivity.class));
                                 handler.sendEmptyMessage(Const.START_HOME);
+                            } else {
+                                sharedPreferences.clear();
+                                handler.sendEmptyMessage(Const.START_LOGIN);
                             }
                         }
 
                         @Override
                         public void onFailure(Call call, IOException e) {
                             super.onFailure(call, e);
+                            sharedPreferences.clear();
                             handler.sendEmptyMessage(Const.START_LOGIN);
                         }
                     });
         } else {
             sharedPreferences.clear();
-            Intent i = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(i);
+            handler.sendEmptyMessage(Const.START_LOGIN);
         }
     }
 }

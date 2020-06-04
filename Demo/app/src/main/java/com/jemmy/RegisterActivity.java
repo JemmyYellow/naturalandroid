@@ -1,9 +1,14 @@
 package com.jemmy;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,13 +26,31 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_username,et_password,et_phone;
     private Button btn_commit;
-    private int sign;
-
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case Const.START_LOGIN_IN_REGISTER:
+                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_LONG).show();
+                    finish();
+                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                    i.putExtra("usernameAndPassword",msg.getData());
+                    startActivity(i);
+                    break;
+                case Const.MAKE_FAIL_TOAST:
+                    Toast.makeText(RegisterActivity.this, (String)msg.obj, Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
+        setTitle("注册");
         this.initView();
 
         btn_commit.setOnClickListener(new View.OnClickListener() {
@@ -43,21 +66,33 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onFinish(String status, String msg) {
                                 super.onFinish(status, msg);
-                                Gson gson = new Gson();
-                                ServerResponse<User> serverResponse = gson.fromJson(msg,
-                                        new TypeToken<ServerResponse<User>>() {
-                                        }.getType());
-                                int status1 = serverResponse.getStatus();
-                                if(status1 == 0){
-                                    //注册成功
-                                    sign = 0;
-                                    Looper.prepare();
-                                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_LONG).show();
-                                    Looper.loop();
-                                }else {
-                                    Looper.prepare();
-                                    Toast.makeText(RegisterActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
-                                    Looper.loop();
+                                if(status.equals("success")){
+                                    Gson gson = new Gson();
+                                    ServerResponse<User> serverResponse = gson.fromJson(msg,
+                                            new TypeToken<ServerResponse<User>>() {
+                                            }.getType());
+                                    int status1 = serverResponse.getStatus();
+                                    if(status1 == 0){
+                                        //注册成功
+                                        Message message = new Message();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("username",serverResponse.getData().getUsername());
+                                        bundle.putString("password",serverResponse.getData().getPassword());
+                                        message.what = Const.START_LOGIN_IN_REGISTER;
+                                        message.setData(bundle);
+                                        handler.sendMessage(message);
+                                    }else {
+                                        //注册失败
+                                        Message message = new Message();
+                                        message.what = Const.MAKE_FAIL_TOAST;
+                                        message.obj = serverResponse.getMsg();
+                                        handler.sendMessage(message);
+                                    }
+                                } else {
+                                    Message message = new Message();
+                                    message.what = Const.MAKE_FAIL_TOAST;
+                                    message.obj = msg;
+                                    handler.sendMessage(message);
                                 }
                             }
                         });
@@ -66,7 +101,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        sign = -1;
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
         et_phone = findViewById(R.id.et_phone);

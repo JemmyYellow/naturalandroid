@@ -7,8 +7,8 @@ import com.jemmy.vo.UserVO;
 
 public class UserViewModel extends ViewModel {
     // TODO: Implement the ViewModel
-    UserVO userVO;
-    User user;
+    private UserVO userVO;
+    private User user;
 
     public UserVO getUserVO() {
         return userVO;

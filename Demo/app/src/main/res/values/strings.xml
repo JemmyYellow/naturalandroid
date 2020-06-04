@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Demo</string>
+    <string name="app_name" translatable="false">Demo</string>
     <string name="btn_login">Login</string>
     <string name="app_ver">1.0.1Beta</string>
     <string name="btn_signup">Register</string>
@@ -50,5 +50,7 @@
     <string name="error_missing_global_partner_seller_rsa_private" >Error: Missing \"PARTNER\", \"SELLER\", or \"RSA_PRIVATE\\ in OrderUtils1_0_Global.</string>
     <string name="payment_inst_hk">Payer: HK</string>
     <string name="payment_inst_cn">Payer: CN</string>
+    <string name="productImg">productImg</string>
+    <string name="cartAdd">cart_add</string>
 
 </resources>

@@ -54,6 +54,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         button2.setOnClickListener(this);
         imageView.setOnClickListener(this);
 
+        Bundle bundle = getIntent().getBundleExtra("usernameAndPassword");
+        if(bundle!=null){
+            editText.setText(bundle.getCharSequence("username"));
+            editText2.setText(bundle.getCharSequence("password"));
+        }
     }
 
     @Override
@@ -71,18 +76,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             public void onFinish(String status, String msg) {
                                 super.onFinish(status, msg);
                                 if (status.equals("failure")) {
-                                    handler.sendEmptyMessage(0);
-                                    Looper.prepare();
-                                    Toast.makeText(LoginActivity.this, "请求失败", Toast.LENGTH_LONG).show();
-                                    Looper.loop();
+                                    Message message = Message.obtain();
+                                    message.what = -1;
+                                    message.obj = msg;
+                                    handler.sendMessage(message);
                                     return;
                                 }
                                 //数据在msg里(json格式的)
                                 //解析数据
                                 Gson gson = new Gson();
                                 ServerResponse<User> serverResponse = gson.fromJson(msg,
-                                        new TypeToken<ServerResponse<User>>() {
-                                        }.getType());
+                                        new TypeToken<ServerResponse<User>>(){}.getType());
                                 int status1 = serverResponse.getStatus();
 
                                 if (status1 == 0) {//登录成功
@@ -93,12 +97,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     util.putString("user", gson.toJson(serverResponse.getData()));
 //                                    Boolean isLogin = util.readBoolean("isLogin");
                                     handler.sendEmptyMessage(0);
-                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                                 } else {
-                                    handler.sendEmptyMessage(0);
-                                    Looper.prepare();
-                                    Toast.makeText(LoginActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
-                                    Looper.loop();
+                                    Message message = Message.obtain();
+                                    message.what = -1;
+                                    message.obj = serverResponse.getMsg();
+                                    handler.sendMessage(message);
                                 }
                             }
                         });
@@ -126,12 +129,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 case 0:
 //                    progressBar.setVisibility(View.INVISIBLE);
                     reference.get().progressBar.setVisibility(View.INVISIBLE);
+                    reference.get().startActivity(new Intent(reference.get(), HomeActivity.class));
+                    break;
+                case -1:
+                    Toast.makeText(reference.get(), "登录失败:"+(String) msg.obj, Toast.LENGTH_LONG).show();
+                    break;
+                default:
                     break;
             }
             super.handleMessage(msg);
         }
     }
-
-    ;
 
 }

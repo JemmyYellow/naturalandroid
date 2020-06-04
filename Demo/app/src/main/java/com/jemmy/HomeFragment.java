@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jemmy.adapter.HomeAdapter;
-import com.jemmy.utils.DiffCallback;
+import com.jemmy.utils.ProductDiffCallback;
 import com.jemmy.viewmodel.HomeViewModel;
-import com.jemmy.vo.PhotoItem;
+import com.jemmy.vo.Product;
 
 import java.util.List;
 
@@ -38,26 +38,30 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
 
-        View view =  inflater.inflate(R.layout.home_fragment, container, false);
-        layout = view.findViewById(R.id.swipeLayout);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        layout = view.findViewById(R.id.orderSwipeLayout);
+        recyclerView = view.findViewById(R.id.orderRecyclerView);
+
         layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mViewModel.fetchData();
             }
         });
-        final HomeAdapter adapter = new HomeAdapter(new DiffCallback());
+
+        final HomeAdapter adapter = new HomeAdapter(new ProductDiffCallback());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        mViewModel._photoListLive.observe(getViewLifecycleOwner(), new Observer<List<PhotoItem>>() {
+        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+
+        mViewModel._productListLive.observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
-            public void onChanged(List<PhotoItem> photoItems) {
-                adapter.submitList(photoItems);
+            public void onChanged(List<Product> products) {
+                adapter.submitList(products);
                 layout.setRefreshing(false);
             }
         });
+
         return view;
     }
 
@@ -70,7 +74,7 @@ public class HomeFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.swiperefresh:
                 layout.setRefreshing(true);
                 mViewModel.fetchData();
@@ -86,7 +90,10 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
 
-        mViewModel.fetchData();
+        if (mViewModel._productListLive.getValue() == null ||
+                mViewModel._productListLive.getValue().size() == 0) {
+            mViewModel.fetchData();
+        }
     }
 
 }

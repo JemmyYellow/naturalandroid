@@ -1,5 +1,6 @@
 package com.jemmy;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,12 +37,19 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     private Button btnUpPassword, btnUpPhone, backtohome;
     private SharedPreferencesUtil util;
     private User loginuser;
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what){
                 case Const.REFRESH_USER_INFO:
                     setText();
+                    Toast.makeText(UserInfoActivity.this, "修改成功", Toast.LENGTH_LONG).show();
+                    break;
+                case Const.FETCH_FAIL:
+                    Toast.makeText(UserInfoActivity.this, (String)msg.obj, Toast.LENGTH_LONG).show();
+                    break;
+                default:
                     break;
             }
         }
@@ -51,7 +59,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
-
+        setTitle("用户信息");
         up_username = findViewById(R.id.up_username);
         up_phone = findViewById(R.id.up_phone);
         up_password = findViewById(R.id.up_password);
@@ -101,35 +109,32 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                                     dialog.cancel();
                                     return;
                                 }
-                                OkHttpUtils.get(Const.IP_PORT + "/portal/user/changepwd.do?id=" + userId
+                                OkHttpUtils.get(Const.IP_PORT + "/portal/user/changepwd.do?userid=" + userId
                                                 + "&old=" + old
                                                 + "&now=" + now,
                                         new OkHttpCallback() {
                                             @Override
                                             public void onFinish(String status, String msg) {
                                                 super.onFinish(status, msg);
-                                                if (status.equals("failure")) {
-                                                    Looper.prepare();
-                                                    Toast.makeText(UserInfoActivity.this, "请求失败", Toast.LENGTH_LONG).show();
-                                                    Looper.loop();
-                                                    return;
-                                                }
-                                                Gson gson = new Gson();
-                                                ServerResponse response = gson.fromJson(msg, ServerResponse.class);
-                                                if (response.getStatus() == 0) {
-                                                    User user1 = (User) util.readObject("user", User.class);
-                                                    user1.setPassword(now);
-                                                    util.putString("user", new Gson().toJson(user1));
-                                                    handler.sendEmptyMessage(Const.REFRESH_USER_INFO);
-                                                    Looper.prepare();
-                                                    Toast.makeText(UserInfoActivity.this,
-                                                            "修改密码成功", Toast.LENGTH_LONG).show();
-                                                    Looper.loop();
+                                                if (status.equals(Const.SUCCESS)) {
+                                                    Gson gson = new Gson();
+                                                    ServerResponse response = gson.fromJson(msg, ServerResponse.class);
+                                                    if (response.getStatus() == 0) {
+                                                        User user1 = (User) util.readObject("user", User.class);
+                                                        user1.setPassword(now);
+                                                        util.putString("user", new Gson().toJson(user1));
+                                                        handler.sendEmptyMessage(Const.REFRESH_USER_INFO);
+                                                    } else {
+                                                        Message message = Message.obtain();
+                                                        message.what = Const.FETCH_FAIL;
+                                                        message.obj = response.getMsg();
+                                                        handler.sendMessage(message);
+                                                    }
                                                 } else {
-                                                    Looper.prepare();
-                                                    Toast.makeText(UserInfoActivity.this,
-                                                            response.getMsg(), Toast.LENGTH_LONG).show();
-                                                    Looper.loop();
+                                                    Message message = Message.obtain();
+                                                    message.what = Const.FETCH_FAIL;
+                                                    message.obj = msg;
+                                                    handler.sendMessage(message);
                                                 }
                                             }
                                         });
@@ -163,7 +168,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 final String newPhone = newphone.getText().toString();
-                                String inputConfirm = confirmma.getText().toString();
+                                final String inputConfirm = confirmma.getText().toString();
                                 if (newPhone.equals("") || inputConfirm.equals("")) {
                                     Toast.makeText(UserInfoActivity.this,
                                             "输入框为空", Toast.LENGTH_LONG).show();
@@ -177,9 +182,10 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                                             @Override
                                             public void onFailure(Call call, IOException e) {
                                                 super.onFailure(call, e);
-                                                Looper.prepare();
-                                                Toast.makeText(UserInfoActivity.this, "请求失败", Toast.LENGTH_LONG).show();
-                                                Looper.loop();
+                                                Message message = Message.obtain();
+                                                message.what = Const.FETCH_FAIL;
+                                                message.obj = e.toString();
+                                                handler.sendMessage(message);
                                             }
 
                                             @Override
@@ -193,15 +199,11 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                                                     user2.setPhone(newPhone);
                                                     util.putString("user", new Gson().toJson(user2));
                                                     handler.sendEmptyMessage(Const.REFRESH_USER_INFO);
-                                                    Looper.prepare();
-                                                    Toast.makeText(UserInfoActivity.this,
-                                                            "修改手机成功", Toast.LENGTH_LONG).show();
-                                                    Looper.loop();
                                                 } else {
-                                                    Looper.prepare();
-                                                    Toast.makeText(UserInfoActivity.this,
-                                                            phoneResponse.getMsg(), Toast.LENGTH_LONG).show();
-                                                    Looper.loop();
+                                                    Message message = Message.obtain();
+                                                    message.what = Const.FETCH_FAIL;
+                                                    message.obj = phoneResponse.getMsg();
+                                                    handler.sendMessage(message);
                                                 }
                                             }
                                         });

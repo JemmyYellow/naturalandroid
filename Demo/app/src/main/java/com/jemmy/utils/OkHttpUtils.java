@@ -8,7 +8,7 @@ public class OkHttpUtils {
 
     private OkHttpUtils(){}
 
-    private static final OkHttpClient CLIENT = new OkHttpClient.Builder()
+    private static OkHttpClient CLIENT = new OkHttpClient.Builder()
             .connectTimeout(6,TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
@@ -19,7 +19,8 @@ public class OkHttpUtils {
     public static void get(String url, OkHttpCallback callback){
         callback.url = url;
         Request request = new Request.Builder().url(url).build();
-        CLIENT.newCall(request).enqueue(callback);
+        Call call = CLIENT.newCall(request);
+        call.enqueue(callback);
     }
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -39,5 +40,13 @@ public class OkHttpUtils {
         callback.url = url;
         Request request = new Request.Builder().url(url).build();
         CLIENT.newCall(request).enqueue(callback);
+    }
+
+    public static void initClient(){
+        CLIENT = new OkHttpClient.Builder()
+                .connectTimeout(6,TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .build();
     }
 }

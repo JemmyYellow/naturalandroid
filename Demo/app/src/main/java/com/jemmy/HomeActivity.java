@@ -7,8 +7,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+
+import com.alipay.sdk.app.EnvUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.jemmy.utils.SharedPreferencesUtil;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -23,7 +24,8 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, controller, configuration);
         NavigationUI.setupWithNavController(bottomNavigationView, controller);
 
-        SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(getApplicationContext());
-
+//        SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(getApplicationContext());
+        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
     }
+
 }
