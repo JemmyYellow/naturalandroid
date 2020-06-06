@@ -51,7 +51,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // TODO: Use the ViewModel
-
         //将user放在viewmodel中
         SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(requireActivity());
         UserVO userVO = new UserVO();
@@ -89,7 +88,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 builder.create().show();
             }
         });
-
     }
 
     @Override

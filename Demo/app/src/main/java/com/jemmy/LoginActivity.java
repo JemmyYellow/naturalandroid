@@ -132,6 +132,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     reference.get().startActivity(new Intent(reference.get(), HomeActivity.class));
                     break;
                 case -1:
+                    reference.get().progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(reference.get(), "登录失败:"+(String) msg.obj, Toast.LENGTH_LONG).show();
                     break;
                 default:

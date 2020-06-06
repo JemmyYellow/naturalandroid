@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,16 +37,16 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     private SharedPreferencesUtil util;
     private User loginuser;
     @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case Const.REFRESH_USER_INFO:
                     setText();
                     Toast.makeText(UserInfoActivity.this, "修改成功", Toast.LENGTH_LONG).show();
                     break;
                 case Const.FETCH_FAIL:
-                    Toast.makeText(UserInfoActivity.this, (String)msg.obj, Toast.LENGTH_LONG).show();
+                    Toast.makeText(UserInfoActivity.this, (String) msg.obj, Toast.LENGTH_LONG).show();
                     break;
                 default:
                     break;
