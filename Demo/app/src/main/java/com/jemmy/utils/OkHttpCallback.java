@@ -24,6 +24,7 @@ public class OkHttpCallback implements Callback {
 //        OkHttpUtils.initClient();
         onFinish("failure", e.toString());
         call.cancel();
+        OkHttpUtils.initClient();
         Log.d(TAG, ON_FAILURE);
     }
 
@@ -34,6 +35,7 @@ public class OkHttpCallback implements Callback {
         Log.d(TAG, "请求成功:"+result);
         onFinish("success", result);
         call.cancel();
+        OkHttpUtils.initClient();
         Log.d(TAG, ON_RESPONSE);
     }
 

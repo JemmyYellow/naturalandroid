@@ -156,6 +156,7 @@ public class OrderVOAdapter extends ListAdapter<OrderVO, OrderVOAdapter.MyViewHo
          */
         switch (vo.getStatus()) {
             case 20:
+                holder.btn_order.setVisibility(View.VISIBLE);
                 holder.btn_order.setText("去付款");
                 holder.btn_order.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -202,6 +203,7 @@ public class OrderVOAdapter extends ListAdapter<OrderVO, OrderVOAdapter.MyViewHo
                 });
                 break;
             case 30:
+                holder.btn_order.setVisibility(View.VISIBLE);
                 holder.btn_order.setText("确认收货");
                 holder.btn_order.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -251,6 +253,7 @@ public class OrderVOAdapter extends ListAdapter<OrderVO, OrderVOAdapter.MyViewHo
                 });
                 break;
             case 40:
+                holder.btn_order.setVisibility(View.VISIBLE);
                 holder.btn_order.setText("关闭订单");
                 holder.btn_order.setOnClickListener(new View.OnClickListener() {
                     @Override
